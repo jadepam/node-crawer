@@ -15,6 +15,6 @@ module.exports = {
         // 最大并发数
         maxConnections: 1,
          // 两次请求之间将闲置1000ms
-        rateLimit: 500,
+        rateLimit: 10000,
     },
 }

@@ -4,11 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node ./puppeteer/index.js",
+    "crawer": "node ./crawer/index.js",
+    "jsp": "rimraf jspnew && node on.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "puppeteer": "^1.18.1"
+  },
+  "dependencies": {
+    "crawler": "^1.2.1",
+    "rimraf": "^3.0.0"
   }
 }

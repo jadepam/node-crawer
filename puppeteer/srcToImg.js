@@ -9,12 +9,12 @@ const writeFile=promisify(fs.writeFile)
 const urlToImg = promisify((url,dir) =>{
     const mod=/^https:/.test(url) ? https:http;
     const ext = path.extname(url);
-    const file =path.join(dir,`${Date.now()}${ext}`)
+    const file =path.join(dir,`${new Date()}.${ext}`)
     mod.get(url,res=>{
         res.pipe(fs.createWriteStream(file)).on(
             "finish",()=>{
                 //  callback();
-                console.log(file)
+                console.log(file,"img")
             }
         )
     })
@@ -25,7 +25,7 @@ const base64ToImg=async function(base64Str,dir){
     const matchs= base64Str.match(/^data:(.+?);base64,(.+)$/)
     try{
         const ext=matchs[1].split('/')[1].replace('jpeg','jpg');
-        const file =path.join(dir,`${Date.now()}${ext}`);
+        const file =path.join(dir,`${Date.now()}.${ext}`);
         await writeFile(file,matchs[2],'base64');
         console.log(file)
     }catch(ex){
