@@ -1,39 +1,60 @@
 # nodecrawler
 
-#### 介绍
-{**以下是码云平台说明，您可以替换此简介**
-码云是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
 
-#### 软件架构
-软件架构说明
+```
+git clone git@gitee.com:jadepam/nodecrawler.git
+npm install
+puppeteer:npm run start
+crawer:npm run start
+```
+
+## 命令行：npm run jsp
+
+本地jspnew文件下，会生成上次执行npm run jsp后本地新增的路由页面
+
+此处路由页面，指代config/routers文件下，设置jspPage:true的页面,如
+```
+  {
+    path: '/member-all',
+    name: '会员分析-整体',
+    component: './member-all/index',
+    jspPage:true
+  }
+``` 
+
+适用：java老系统项目jsp页面(iframe)+react等单页面应用项目,根据路由配置自动生成jsp页面
+
+iframe高度适应
+
+1、[element-resize-detector]
+原理：用该插件监听iframe元素高度，通过window.postMessage()传值给父标签，jsp页面通过 window.addEventListener('message',{})方法监听到高度变化并设置iframe父标签高度
+
+单页面配置：
+```
+import elementResizeDetectorMaker from 'element-resize-detector'
+const resize_height=elementResizeDetectorMaker()
+
+class Box extends React.Component{
+  componentDidMount() {
+    resize_height.listenTo(this.body, (el) => {
+      window.parent.postMessage(el.offsetHeight, '*');
+    })
+  }
+}
+export default Box
+```
+jsp页面配置：
+```
+<iframe id="vue-iframe" src="/resources/dist/index.html/#${item}" frameborder="0" width="100%"></iframe>
+<script>
+    window.addEventListener('message',function(e){
+    document.getElementById('vue-iframe').height=e.data
+    })
+</script>
+```
+
+2、[iframe-resizer](https://github.com/davidjbradshaw/iframe-resizer)
 
 
-#### 安装教程
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 使用说明
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
 
 
-#### 码云特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
